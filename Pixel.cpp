@@ -18,7 +18,7 @@ void Pixel::iterate() {
     phi = atan(y / x);
     if (r >= 2) {
       escaped = true;
-      (*colors)[index + 3] = 0;
+      (*colors)[index * 4 + 3] = 0;
       return;
     }
     x = pow(r, n) * sin(n * theta) * cos(n * phi) + x0;
