@@ -14,12 +14,15 @@ private:
   std::vector<GLdouble> vertices;
   std::vector<GLfloat> colors;
   std::vector<Pixel *> pixels;
+  std::vector<std::thread> threads;
   UINT numPoints = 0;
+  UINT numThreads = 12;
 
 public:
   void draw();
   void initialize();
   void calculate();
+  void chunkIterate(UINT start, UINT end);
   Mandelbulb();
   ~Mandelbulb();
 };

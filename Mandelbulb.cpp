@@ -11,7 +11,8 @@ Mandelbulb::~Mandelbulb() {
 }
 
 void Mandelbulb::initialize() {
-  double resolution = 2.f / (128);
+  double resolution = 2.f / (10 * numThreads); // (1/t)(n*t)^3 work per thread
+  std::cout << sizeof(Pixel) << std::endl;
   double x, y, z;
   for (x = -1.0; x < 1.0; x += resolution) {
     for (y = -1.0; y < 1.0; y += resolution) {
@@ -43,8 +44,22 @@ void Mandelbulb::draw() {
   glDisableClientState(GL_COLOR_ARRAY);
 }
 
+void Mandelbulb::chunkIterate(UINT start, UINT end) {
+  for (UINT i = start; i < end; i++) {
+    pixels[i]->iterate();
+  }
+}
+
 void Mandelbulb::calculate() {
-  for (auto pixel : pixels) {
-    pixel->iterate();
+  UINT perThread = numPoints / numThreads;
+  for (UINT i = 0; i < numThreads; i++) {
+    threads.emplace_back([this, i, perThread]() {
+      chunkIterate(i * perThread, (i + 1) * perThread);
+    });
+  }
+  for (std::thread &thread : threads) {
+    if (thread.joinable()) {
+      thread.join();
+    }
   }
 }
