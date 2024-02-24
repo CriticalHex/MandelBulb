@@ -1,5 +1,5 @@
 TARGET = Mandelbulb.exe
-SRC_FILES = main.cpp Mandelbulb.cpp Cube.cpp DebugRenderer.cpp
+SRC_FILES = main.cpp Mandelbulb.cpp Cube.cpp DebugRenderer.cpp Pixel.cpp
 
 OBJECTS = $(SRC_FILES:.cpp=.o)
 
@@ -26,7 +26,8 @@ run:
 
 .PHONY: clean run
 
-main.o: main.cpp Mandelbulb.o Cube.o DebugRenderer.o
+main.o: main.cpp Mandelbulb.o Cube.o DebugRenderer.o Pixel.o
 Mandelbulb.o: Mandelbulb.cpp
 Cube.o: Cube.cpp
 DebugRenderer.o: DebugRenderer.cpp
+Pixel.o: Pixel.cpp

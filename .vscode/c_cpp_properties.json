@@ -18,7 +18,7 @@
             "configurationProvider": "ms-vscode.makefile-tools",
             "browse": {
                 "path": [
-                    "C:/mingw64/include/**"
+                    "C:/mingw64/include/SFML"
                 ]
             }
         }
